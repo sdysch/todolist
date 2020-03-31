@@ -1,0 +1,5 @@
+#!/bin/bash
+#TODO - colouring/formatting?
+file="${TODOLISTDIR}/lists/$1.todo"
+echo "Todo list $1"
+cat $file
