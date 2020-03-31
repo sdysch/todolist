@@ -1,0 +1,4 @@
+#!/bin/bash
+dir=${TODOLISTDIR}/lists/
+find $dir -name "*.todo" -printf "%f\n" | sed "s/.todo//g"
+#find $dir -name "*.todo" -printf "%f\n"
