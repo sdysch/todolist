@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Usage:
+# todo shopping
+#  todo shopping "buy milk"
+
+# Must supply an argument for file
+if [[ $# -eq 0 ]] ; then
+	echo "Must supply file to edit"
+fi
+
+# touch the file (which creates it if it does not exist)
+file="${TODOLISTDIR}/lists/$1.todo"
+touch $file
+
+# if second argument, cat to file
+if [ -z "$2" ]
+	then
+		vim $file
+else
+	echo "* ${2}" >> $file
+fi
