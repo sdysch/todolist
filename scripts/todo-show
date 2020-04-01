@@ -1,5 +1,28 @@
-#!/bin/bash
-#TODO - colouring/formatting?
-file="${TODOLISTDIR}/lists/$1.todo"
-echo "Todo list $1"
-cat $file
+#!/bin/python3
+
+# local
+from common.helpers import stripTODO, getFileContent, getFilePath
+
+# python
+import sys
+
+#====================================================================================================
+
+if len(sys.argv) != 2:
+    print("Usage todo-show [list name]")
+    sys.exit()
+
+listName = stripTODO(str(sys.argv[1]))
+
+# check that list exists
+filename = getFilePath(listName)
+
+# attempt to read file
+fileContent = getFileContent(filename)
+lines = fileContent.split("\n")
+
+for line in lines:
+    if line.startswith("<") and line.endswith(">"):
+        print("\033[1m" + line + "\033[0m")
+    else:
+        print(line)
