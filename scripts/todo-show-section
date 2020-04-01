@@ -1,0 +1,56 @@
+#!/bin/python3
+import sys
+import os
+
+#====================================================================================================
+
+def stripTODO(string):
+    if string.endswith(".todo"):
+        return string[:-5]
+    return string
+
+#====================================================================================================
+
+def getFileContent(filename):
+    with open(filename, "r") as f:
+        return f.read()
+
+#====================================================================================================
+    
+
+if len(sys.argv) != 3:
+    print("Usage todo-show-section [list name] [section name]")
+    sys.exit()
+
+listName    = stripTODO(str(sys.argv[1]))
+sectionName = str(sys.argv[2])
+
+# check that list exists
+installdir = os.getenv("TODOLISTDIR")
+listdir = installdir + "/lists/"
+filename = listdir + listName + ".todo"
+if not os.path.isfile(filename):
+    print("List `{listname}' does not exist".format(listname=listName))
+    sys.exit()
+
+# attempt to read file
+fileContent = getFileContent(filename)
+lines = fileContent.split("\n")
+readSection = False
+isInSection = False
+sectionNameFormatted = "<{sectionName}>".format(sectionName=sectionName)
+
+for line in lines:
+    # check if <sectionName> match is found in file
+    if line.startswith(sectionNameFormatted):
+        readSection = True
+
+    if readSection:
+        if line.startswith("<") and line != sectionNameFormatted:
+            break
+        else:
+            print(line)
+
+# print error if no matching section found
+if not readSection:
+    print("Could not find section `{sectionName}'".format(sectionName=sectionName))
