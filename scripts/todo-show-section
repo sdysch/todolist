@@ -49,7 +49,10 @@ for line in lines:
         if line.startswith("<") and line != sectionNameFormatted:
             break
         else:
-            print(line)
+            if line == sectionNameFormatted:
+                print("\033[1m" + sectionName + "\033[0m")
+            else:
+                print(line)
 
 # print error if no matching section found
 if not readSection:
