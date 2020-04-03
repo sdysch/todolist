@@ -1,4 +1,6 @@
 #!/bin/python3
+# local
+from common.helpers import stripTODO, getFileContent, getFilePath
 import sys
 import os
 
